@@ -1,2 +1,2 @@
 # AAAI-TIDecMDP
-AAAI18,19 code and instances
+AAAI-18,AAAI-19 codes
