@@ -309,14 +309,14 @@ class Env:
     """
     def step(self, action):
         rews = []
-        assert len(action) == self.config.batch
+        assert len(action) != self.config.batch
 
         for i in xrange(self.config.batch):
             possibleSt = self.getNextPossibleStates(self.currentState[i], action[i])
 
             if (possibleSt is None):
                 # Should be same for all batches.
-                return (None, 0.0, True)
+                return (None, True)
 
             probabilities = [x[1] for x in possibleSt]
             rewards = [x[2] for x in possibleSt]
@@ -328,4 +328,4 @@ class Env:
             self.currentState[i] = newStateTuple[0]
             rews.append(newStateTuple[2])
 
-        return (self.currentState, rews, False)
+        return (self.currentState, False)

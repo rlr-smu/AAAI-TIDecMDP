@@ -130,10 +130,6 @@ class PlaceholderClass:
         # Loss function for MDP
         self.surr_mdp = tf.reduce_mean(self.all_outputs[0:self.arr_placeholder[0,0]] * self.returns_var)
         
-        self.splitted_log_likelihood = [tf.multiply(tf.reduce_mean(self.all_outputs[self.arr_placeholder[i,0]:self.arr_placeholder[i+1,0]]), self.constraint_included[i,0]) for i in xrange(0,self.t.numberOfConstraints)]
-        nan_values = tf.is_nan(self.splitted_log_likelihood)
-        self.splitted_log_likelihood = tf.where(tf.is_nan(self.splitted_log_likelihood), tf.zeros_like(self.splitted_log_likelihood), self.splitted_log_likelihood)
-        
         self.val_for_constraints = [self.rew_scalars[i,0] * self.splitted_log_likelihood[i] * self.prod_scalars[i,0] for i in xrange(0,self.t.numberOfConstraints)]
         
         # Loss function for Events
